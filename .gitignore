@@ -168,3 +168,5 @@ coverage
 
 test-results/
 playwright-report/
+
+plan.lorien
