@@ -1,5 +1,19 @@
 <script setup>
+import { ref } from 'vue';
 import '../assets/home.css';
+
+const modelInput = ref('google/flan-t5-base');
+
+const getLLMResults = async (modelName) => {
+    try {
+        const res = await fetch(`http://localhost:8000/llm/?model_name=${modelName}`);
+        const data = await res.json();
+        console.log(data);
+    } catch (error) {
+        console.log(`got err hitting API URI: ${error}`);
+    }
+};
+
 </script>
 
 <template>
@@ -19,7 +33,13 @@ import '../assets/home.css';
         <div class="controls">
             <div class="model-select">
                 <label for="model">Model:</label>
-                <input type="text" id="model" placeholder="e.g., google/flan-t5-base" />
+                <input 
+                    type="text" 
+                    id="model" 
+                    v-model="modelInput" 
+                    placeholder="e.g., google/flan-t5-base" 
+                />
+                <button @click="getLLMResults(modelInput)">Set model</button>
             </div>
             <div class="params">
                 <label for="temperature">Temperature: 0.1</label>
